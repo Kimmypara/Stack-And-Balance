@@ -4,14 +4,15 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private Transform blockPrefab;
     [SerializeField] private Transform blockHolder;
+    [SerializeField] private Transform baseTransform; // Assign this in Inspector
 
     private Transform currentBlock = null;
     private Rigidbody currentRigidbody = null;
-    private Vector3 offset;
 
     private bool isDragging = false;
 
     private Vector3 blockStartPosition = new Vector3(0f, 7f, -4.4f);
+    private int blockCount = 0;
 
     void Start()
     {
@@ -29,8 +30,17 @@ public class GameManager : MonoBehaviour
             renderer.material.color = Random.ColorHSV();
         }
 
+        blockCount++;
+        Debug.Log("Block Count: " + blockCount);
+
+        if (blockCount % 10 == 0)
+        {
+            Debug.Log("Rotating base after 10 blocks!");
+            baseTransform.Rotate(Vector3.up, 90f);
+        }
+
         currentRigidbody = currentBlock.GetComponent<Rigidbody>();
-        currentRigidbody.isKinematic = true; // Stay in place until released
+        currentRigidbody.isKinematic = true;
     }
 
     void Update()
@@ -40,7 +50,6 @@ public class GameManager : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        // Start dragging
         if (Input.GetMouseButtonDown(0))
         {
             if (Physics.Raycast(ray, out RaycastHit hit))
@@ -53,10 +62,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Dragging logic
         if (isDragging && Input.GetMouseButton(0))
         {
-            Plane dragPlane = new Plane(Vector3.up, currentBlock.position); // Horizontal drag
+            Plane dragPlane = new Plane(Vector3.up, currentBlock.position);
             if (dragPlane.Raycast(ray, out float enter))
             {
                 Vector3 hitPoint = ray.GetPoint(enter);
@@ -64,7 +72,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Release block
         if (isDragging && Input.GetMouseButtonUp(0))
         {
             Debug.Log("Dragging released — dropping block");
