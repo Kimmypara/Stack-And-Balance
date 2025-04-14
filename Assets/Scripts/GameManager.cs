@@ -22,8 +22,12 @@ public class GameManager : MonoBehaviour
     
     void SpawnNewBlock()
     {
+        
+        
         Debug.Log("Spawning new block...");
-        currentBlock = Instantiate(blockPrefab, blockStartPosition, Quaternion.identity, blockHolder);
+        currentBlock = Instantiate(blockPrefab, blockStartPosition, Quaternion.identity, baseTransform);
+        currentBlock.localScale = blockPrefab.localScale; // Copy original prefab scale
+
 
         Renderer renderer = currentBlock.GetComponent<Renderer>();
         if (renderer != null)
@@ -34,10 +38,11 @@ public class GameManager : MonoBehaviour
         blockCount++;
         Debug.Log("Block Count: " + blockCount);
 
-        if (blockCount % 10 == 0)
+        if (blockCount % 11 == 0)
         {
             Debug.Log("Rotating base after 10 blocks!");
             baseTransform.Rotate(Vector3.up, 90f);
+            
         }
 
         currentRigidbody = currentBlock.GetComponent<Rigidbody>();
