@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
         SpawnNewBlock();
     }
 
+    
     void SpawnNewBlock()
     {
         Debug.Log("Spawning new block...");
