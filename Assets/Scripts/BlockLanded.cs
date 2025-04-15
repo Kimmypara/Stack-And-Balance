@@ -10,12 +10,11 @@ public class BlockLanded : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    void OnCollisionEnter(Collision collision)
     {
         // Mark as landed only if the velocity is almost zero and it's no longer kinematic
-        if (!hasLanded && rb != null && !rb.isKinematic && rb.linearVelocity.magnitude < 0.01f)
-        {
-            hasLanded = true; // Block has landed
-        }
+        hasLanded = true; // Block has landed
+        HighestObjectController highestObjectController = FindObjectOfType<HighestObjectController>();
+        highestObjectController.Move(transform.position.y);
     }
 }

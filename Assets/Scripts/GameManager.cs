@@ -1,22 +1,25 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Transform blockPrefab;
+    [SerializeField] private Transform[] prefabs;
     [SerializeField] private Transform blockHolder;
     [SerializeField] private Transform baseTransform; // Assign this in Inspector
-
+    [SerializeField] private CameraController cameraController;
+    
     private Transform currentBlock = null;
     private Rigidbody currentRigidbody = null;
 
     private bool isDragging = false;
 
-    private Vector3 blockStartPosition = new Vector3(0f, 7f, -4.4f);
     private int blockCount = 0;
 
     void Start()
     {
         SpawnNewBlock();
+        cameraController.Next();
     }
 
     
@@ -25,25 +28,16 @@ public class GameManager : MonoBehaviour
         
         
         Debug.Log("Spawning new block...");
-        currentBlock = Instantiate(blockPrefab, blockStartPosition, Quaternion.identity, baseTransform);
-        currentBlock.localScale = blockPrefab.localScale; // Copy original prefab scale
+        Transform selectedPrefab = prefabs[Random.Range(0, prefabs.Length)];
+        currentBlock = Instantiate(selectedPrefab, blockHolder.position, blockHolder.rotation, baseTransform);
 
 
-        Renderer renderer = currentBlock.GetComponent<Renderer>();
-        if (renderer != null)
+        if (TryGetComponent(out Renderer renderer))
         {
             renderer.material.color = Random.ColorHSV();
         }
 
         blockCount++;
-        Debug.Log("Block Count: " + blockCount);
-
-        if (blockCount % 11 == 0)
-        {
-            Debug.Log("Rotating base after 10 blocks!");
-            baseTransform.Rotate(Vector3.up, 90f);
-            
-        }
 
         currentRigidbody = currentBlock.GetComponent<Rigidbody>();
         currentRigidbody.isKinematic = true;
@@ -70,11 +64,12 @@ public class GameManager : MonoBehaviour
 
         if (isDragging && Input.GetMouseButton(0))
         {
-            Plane dragPlane = new Plane(Vector3.up, currentBlock.position);
+            Plane dragPlane = new Plane(Camera.main.transform.forward, currentBlock.position);
             if (dragPlane.Raycast(ray, out float enter))
             {
                 Vector3 hitPoint = ray.GetPoint(enter);
-                currentBlock.position = new Vector3(hitPoint.x, currentBlock.position.y, currentBlock.position.z);
+                hitPoint.y = currentBlock.position.y;
+                currentBlock.position = hitPoint;
             }
         }
 
@@ -87,7 +82,29 @@ public class GameManager : MonoBehaviour
             currentBlock = null;
             currentRigidbody = null;
 
-            Invoke("SpawnNewBlock", 0.8f);
+            if (blockCount % 10 == 0)
+            {
+                StartCoroutine(WaitAndSpawn());
+            }
+            else
+            {
+                StartCoroutine(SpawnAfterTime());
+
+            }
         }
+    }
+
+    private IEnumerator WaitAndSpawn()
+    {
+        yield return new WaitForSeconds(0.8f);
+        cameraController.Next();
+        yield return new WaitForSeconds(2.1f);
+        SpawnNewBlock();
+    }
+    
+    private IEnumerator SpawnAfterTime()
+    {
+        yield return new WaitForSeconds(0.8f);
+        SpawnNewBlock();
     }
 }
