@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -724457317509179071}
   m_Layer: 0
   m_Name: BlockPrefab
-  m_TagString: Untagged
+  m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 647cc75b36cfaa840b9898eb438feb5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasLanded: 0
+  hasLanded: 1
 --- !u!114 &-724457317509179071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,5 +163,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c033ec330996a34090737edbe868c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverPanel: {fileID: 0}
   fallThreshold: 2
