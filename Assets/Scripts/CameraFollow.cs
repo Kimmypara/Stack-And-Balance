@@ -2,59 +2,52 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform blockHolder; // The holder of the blocks, should be assigned
-    public float yOffset = 5f; // The height offset for the camera
-    public float smoothSpeed = 0.1f; // Camera smoothing speed
+    public Transform FloorHolder;     // Holder for floor prefabs
+    public Transform blockHolder;     // Holder for falling blocks
+    public float yOffset = 5f;        // How far above the top object the camera should hover
+    public float smoothSpeed = 0.1f;  // How smooth the camera follows
 
-    private float highestBlockY;
+    private float highestY;
     private float initialCamY;
-
     private Camera mainCamera;
 
     void Start()
     {
-        if (blockHolder == null)
+        if (blockHolder == null || FloorHolder == null)
         {
-            Debug.LogError("CameraFollow: BlockHolder not assigned!");
+            Debug.LogError("CameraFollow: One or more holders not assigned!");
             return;
         }
 
-        // Get the Camera component
         mainCamera = Camera.main;
-
-        // Initial camera position
         initialCamY = transform.position.y;
-        highestBlockY = initialCamY;
+        highestY = initialCamY;
     }
 
     void LateUpdate()
     {
-        // Track the highest block in the tower
-        float maxY = highestBlockY;
+        float maxY = float.MinValue;
 
+        // Check highest landed block
         foreach (Transform block in blockHolder)
         {
             BlockLanded landedScript = block.GetComponent<BlockLanded>();
-
             if (landedScript != null && landedScript.hasLanded)
             {
-                if (block.position.y > maxY)
-                {
-                    maxY = block.position.y;
-                }
+                maxY = Mathf.Max(maxY, block.position.y);
             }
         }
 
-        // Check if the tower exceeds the camera's visible height
-        float screenHeight = mainCamera.orthographicSize * 2;
-
-        if (maxY > initialCamY + screenHeight / 2)
+        // Check highest floor
+        foreach (Transform floor in FloorHolder)
         {
-            highestBlockY = maxY; // Move the camera to the new height
+            maxY = Mathf.Max(maxY, floor.position.y);
         }
 
-        // Smoothly adjust the camera's Y position
-        float targetY = Mathf.Max(initialCamY, highestBlockY + yOffset);
+        // Ensure it never goes below initial position
+        highestY = Mathf.Max(highestY, maxY);
+
+        float targetY = Mathf.Max(initialCamY, highestY + yOffset);
         Vector3 desiredPosition = new Vector3(transform.position.x, targetY, transform.position.z);
         transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
     }
