@@ -58,17 +58,46 @@ public class GameManager : MonoBehaviour
     void SpawnFloor()
     {
         Debug.Log("Spawning Floor Prefab...");
-        Vector3 spawnPosition = baseTransform.position; // This ensures alignment with the base
+
+        // Find current top Y position from blocks or base
+        float topY = baseTransform.position.y;
+
+        foreach (Transform child in blockHolder)
+        {
+            if (child.position.y > topY)
+            {
+                topY = child.position.y;
+            }
+        }
+
+        float spawnHeight = topY + 10f; // Spawn 10 units above current top
+
+        Vector3 spawnPosition = new Vector3(baseTransform.position.x, spawnHeight, baseTransform.position.z);
         Transform parent = floorHolder != null ? floorHolder : baseTransform;
 
-        GameObject floor = Instantiate(FloorPrefab, Vector3.zero, Quaternion.identity, parent);
-        floor.transform.localPosition = Vector3.zero; // Align perfectly with parent 
-        floor.transform.localRotation = Quaternion.identity;
-        score = score + 1; 
-        Debug.Log("Floor: " + score);// Add 5 points on landing
-        SetCountText();
+        GameObject floor = Instantiate(FloorPrefab, spawnPosition, Quaternion.identity, parent);
 
+        Rigidbody rb = floor.GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            rb = floor.AddComponent<Rigidbody>(); // Make it fall if not already
+        }
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+
+        BoxCollider col = floor.GetComponent<BoxCollider>();
+        if (col == null)
+        {
+            col = floor.AddComponent<BoxCollider>();
+        }
+
+
+        score += 1;
+        Debug.Log("Floor: " + score);
+        SetCountText();
     }
+
 
 
     void Update()
