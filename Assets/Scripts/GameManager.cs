@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CameraController cameraController;
     [SerializeField] private GameObject FloorPrefab;
     [SerializeField] private Transform floorHolder;
-    [SerializeField] private Transform rotatingTower;
+  
+    private TextMeshProUGUI countText;
+    private int score = 0;
     
     private Transform currentBlock = null;
     private Rigidbody currentRigidbody = null;
@@ -22,6 +24,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        countText = FindObjectOfType<TextMeshProUGUI>(); // You can assign this better later
+        score = 0;
+        SetCountText();
+        
         SpawnNewBlock();
         cameraController.Next();
     }
@@ -45,6 +51,8 @@ public class GameManager : MonoBehaviour
 
         currentRigidbody = currentBlock.GetComponent<Rigidbody>();
         currentRigidbody.isKinematic = true;
+        
+        
     }
     
     void SpawnFloor()
@@ -54,7 +62,11 @@ public class GameManager : MonoBehaviour
         Transform parent = floorHolder != null ? floorHolder : baseTransform;
 
         GameObject floor = Instantiate(FloorPrefab, Vector3.zero, Quaternion.identity, parent);
-        floor.transform.localPosition = Vector3.zero; // Align perfectly with parent (base or floorHolder)
+        floor.transform.localPosition = Vector3.zero; // Align perfectly with parent 
+        floor.transform.localRotation = Quaternion.identity;
+        score = score + 1; 
+        Debug.Log("Floor: " + score);// Add 5 points on landing
+        SetCountText();
 
     }
 
@@ -134,5 +146,11 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
         SpawnNewBlock();
+    }
+    
+    void SetCountText()
+    {
+        // Update the count text with the current count.
+        countText.text = "Floor: " + score.ToString();
     }
 }
