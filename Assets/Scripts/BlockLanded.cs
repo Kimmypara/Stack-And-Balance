@@ -12,15 +12,13 @@ public class BlockLanded : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        countText = FindObjectOfType<TextMeshProUGUI>(); // You can assign this better later
-        score = 0;
-        SetCountText();
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
         // No need to add score here anymore
-        if (other.CompareTag("Block"))
+        if (other.CompareTag("Block") || other.CompareTag("Floor"))
         {
             Debug.Log($"Collided with {other.name}");
         }

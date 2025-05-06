@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform blockHolder;
     [SerializeField] private Transform baseTransform; // Assign this in Inspector
     [SerializeField] private CameraController cameraController;
+    [SerializeField] private GameObject FloorPrefab;
+    [SerializeField] private Transform floorHolder;
+  
+    private TextMeshProUGUI countText;
+    private int score = 0;
     
     private Transform currentBlock = null;
     private Rigidbody currentRigidbody = null;
@@ -15,9 +20,14 @@ public class GameManager : MonoBehaviour
     private bool isDragging = false;
 
     private int blockCount = 0;
+    private int rotationCount = 0;
 
     void Start()
     {
+        countText = FindObjectOfType<TextMeshProUGUI>(); // You can assign this better later
+        score = 0;
+        SetCountText();
+        
         SpawnNewBlock();
         cameraController.Next();
     }
@@ -29,7 +39,7 @@ public class GameManager : MonoBehaviour
         
         Debug.Log("Spawning new block...");
         Transform selectedPrefab = prefabs[Random.Range(0, prefabs.Length)];
-        currentBlock = Instantiate(selectedPrefab, blockHolder.position, blockHolder.rotation, baseTransform);
+        currentBlock = (Transform)Instantiate(selectedPrefab, blockHolder.position, blockHolder.rotation, baseTransform);
 
 
         if (TryGetComponent(out Renderer renderer))
@@ -41,7 +51,25 @@ public class GameManager : MonoBehaviour
 
         currentRigidbody = currentBlock.GetComponent<Rigidbody>();
         currentRigidbody.isKinematic = true;
+        
+        
     }
+    
+    void SpawnFloor()
+    {
+        Debug.Log("Spawning Floor Prefab...");
+        Vector3 spawnPosition = baseTransform.position; // This ensures alignment with the base
+        Transform parent = floorHolder != null ? floorHolder : baseTransform;
+
+        GameObject floor = Instantiate(FloorPrefab, Vector3.zero, Quaternion.identity, parent);
+        floor.transform.localPosition = Vector3.zero; // Align perfectly with parent 
+        floor.transform.localRotation = Quaternion.identity;
+        score = score + 1; 
+        Debug.Log("Floor: " + score);// Add 5 points on landing
+        SetCountText();
+
+    }
+
 
     void Update()
     {
@@ -97,14 +125,32 @@ public class GameManager : MonoBehaviour
     private IEnumerator WaitAndSpawn()
     {
         yield return new WaitForSeconds(0.8f);
-        cameraController.Next();
-        yield return new WaitForSeconds(2.1f);
+
+        rotationCount++;
+
+        // Every 4 rotations, spawn a floor
+        if (rotationCount % 4 == 0)
+        {
+            SpawnFloor();
+            yield return new WaitForSeconds(2f); // ⏳ Wait after floor spawns
+        }
+
+        cameraController.Next(); // ⏩ Rotate camera after the wait
+
+        yield return new WaitForSeconds(2.1f); // Optional wait before spawning next block
         SpawnNewBlock();
     }
+
     
     private IEnumerator SpawnAfterTime()
     {
         yield return new WaitForSeconds(0.8f);
         SpawnNewBlock();
+    }
+    
+    void SetCountText()
+    {
+        // Update the count text with the current count.
+        countText.text = "Floor: " + score.ToString();
     }
 }

@@ -223,6 +223,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 1.29, z: 0.91}
   m_LocalScale: {x: 10.169312, y: 1.8898662, z: 11.68394}
+  m_LocalPosition: {x: 0, y: 0.9299927, z: 0}
+  m_LocalScale: {x: 9.7556715, y: 1.8129952, z: 9.7556715}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1322631739}
@@ -238,7 +240,6 @@ GameObject:
   - component: {fileID: 232072866}
   - component: {fileID: 232072868}
   - component: {fileID: 232072867}
-  - component: {fileID: 232072869}
   m_Layer: 5
   m_Name: countText
   m_TagString: Untagged
@@ -285,7 +286,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score : 0'
+  m_text: 'Floor : 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -364,19 +365,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232072865}
   m_CullTransparentMesh: 1
---- !u!114 &232072869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 232072865}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647cc75b36cfaa840b9898eb438feb5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasLanded: 0
 --- !u!1 &291397721
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,8 +389,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291397721}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.55, z: 7.63}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.5500002, z: 7.6299996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -501,6 +489,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 962620471}
   - {fileID: 291397722}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -560,6 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d05537371fd3e741861ddf210f059e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FloorHolder: {fileID: 0}
   blockHolder: {fileID: 291397722}
   yOffset: 0
   smoothSpeed: 0.125
@@ -1755,6 +1745,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &962620470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 962620471}
+  m_Layer: 0
+  m_Name: FloorHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &962620471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962620470}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.13, y: 0.8299999, z: 11.67}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 330585546}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &964940608
 GameObject:
   m_ObjectHideFlags: 0
@@ -2378,7 +2399,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322631738}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2537,6 +2558,8 @@ MonoBehaviour:
   blockHolder: {fileID: 291397722}
   baseTransform: {fileID: 1322631739}
   cameraController: {fileID: 1377897028}
+  FloorPrefab: {fileID: 4766997058693663187, guid: 6f2e00b94b2de2a44b40ded660975c25, type: 3}
+  floorHolder: {fileID: 962620471}
 --- !u!114 &1377897028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3919,7 +3942,6 @@ SceneRoots:
   - {fileID: 1107608615}
   - {fileID: 1753480242}
   - {fileID: 1377897025}
-  - {fileID: 1322631739}
   - {fileID: 561259335}
   - {fileID: 678626950}
   - {fileID: 353396798}
@@ -3932,3 +3954,4 @@ SceneRoots:
   - {fileID: 1664065356}
   - {fileID: 1751299895}
   - {fileID: 669090465}
+  - {fileID: 1322631739}
