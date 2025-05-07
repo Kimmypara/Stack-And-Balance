@@ -6,7 +6,8 @@ public class HighestObjectController : MonoBehaviour
     {
         if (transform.position.y < height)
         {
-            transform.position = Vector3.up * height;
+            Vector3 newPos = new Vector3(transform.position.x, height, transform.position.z);
+            transform.position = newPos;
         }
     }
 }

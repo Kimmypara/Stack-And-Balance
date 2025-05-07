@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject FloorPrefab;
     [SerializeField] private Transform floorHolder;
   
+    private bool isGameOver = false;
+
     private TextMeshProUGUI countText;
     private int score = 0;
     
@@ -59,9 +61,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Spawning Floor Prefab...");
 
-        // Find current top Y position from blocks or base
         float topY = baseTransform.position.y;
-
         foreach (Transform child in blockHolder)
         {
             if (child.position.y > topY)
@@ -70,8 +70,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        float spawnHeight = topY + 10f; // Spawn 10 units above current top
-
+        float spawnHeight = topY + 10f;
         Vector3 spawnPosition = new Vector3(baseTransform.position.x, spawnHeight, baseTransform.position.z);
         Transform parent = floorHolder != null ? floorHolder : baseTransform;
 
@@ -79,22 +78,22 @@ public class GameManager : MonoBehaviour
 
         Rigidbody rb = floor.GetComponent<Rigidbody>();
         if (rb == null)
-        {
-            rb = floor.AddComponent<Rigidbody>(); // Make it fall if not already
-        }
+            rb = floor.AddComponent<Rigidbody>();
 
         rb.isKinematic = false;
         rb.useGravity = true;
 
         BoxCollider col = floor.GetComponent<BoxCollider>();
         if (col == null)
-        {
             col = floor.AddComponent<BoxCollider>();
-        }
 
+        // ✅ Let HighestObjectController respond to this
+        float landingHeight = floor.transform.position.y;  // Or floor.transform.position.y - halfHeight if needed
+        HighestObjectController hoc = FindObjectOfType<HighestObjectController>();
+        if (hoc != null)
+            hoc.Move(landingHeight);
 
         score += 1;
-        Debug.Log("Floor: " + score);
         SetCountText();
     }
 
@@ -102,6 +101,10 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (isGameOver) return;
+
+        if (currentBlock == null || currentRigidbody == null)
+            return;
         if (currentBlock == null || currentRigidbody == null)
             return;
 
@@ -139,7 +142,7 @@ public class GameManager : MonoBehaviour
             currentBlock = null;
             currentRigidbody = null;
 
-            if (blockCount % 10 == 0)
+            if (blockCount % 5 == 0)
             {
                 StartCoroutine(WaitAndSpawn());
             }
@@ -150,6 +153,12 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
+    public void TriggerGameOver()
+    {
+        isGameOver = true;
+    }
+
 
     private IEnumerator WaitAndSpawn()
     {
