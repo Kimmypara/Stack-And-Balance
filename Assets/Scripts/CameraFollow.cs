@@ -38,17 +38,22 @@ public class CameraFollow : MonoBehaviour
             }
         }
 
-        // Check highest floor
+        // Check highest landed floor
         foreach (Transform floor in FloorHolder)
         {
-            maxY = Mathf.Max(maxY, floor.position.y);
+            Rigidbody rb = floor.GetComponent<Rigidbody>();
+            if (rb != null && rb.IsSleeping()) // Only consider floors that have landed
+            {
+                maxY = Mathf.Max(maxY, floor.position.y);
+            }
         }
 
-        // Ensure it never goes below initial position
+        // Prevent going below starting camera height
         highestY = Mathf.Max(highestY, maxY);
-
+    
         float targetY = Mathf.Max(initialCamY, highestY + yOffset);
         Vector3 desiredPosition = new Vector3(transform.position.x, targetY, transform.position.z);
         transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
     }
+
 }

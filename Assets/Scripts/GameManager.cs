@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CameraController cameraController;
     [SerializeField] private GameObject FloorPrefab;
     [SerializeField] private Transform floorHolder;
-  
+    private int floorCount = 0;
     private bool isGameOver = false;
 
     private TextMeshProUGUI countText;
@@ -61,41 +61,53 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Spawning Floor Prefab...");
 
-        float topY = baseTransform.position.y;
-        foreach (Transform child in blockHolder)
+        float highestY = baseTransform.position.y;
+
+        // Find the highest Y from all landed blocks
+        foreach (Transform block in blockHolder)
         {
-            if (child.position.y > topY)
+            BlockLanded landed = block.GetComponent<BlockLanded>();
+            if (landed != null && landed.hasLanded)
             {
-                topY = child.position.y;
+                Collider col = block.GetComponent<Collider>();
+                if (col != null)
+                {
+                    float blockTop = col.bounds.max.y;
+                    highestY = Mathf.Max(highestY, blockTop);
+                }
             }
         }
 
-        float spawnHeight = topY + 10f;
+        // Find the highest floor Y as well
+        foreach (Transform floor in floorHolder)
+        {
+            Collider col = floor.GetComponent<Collider>();
+            if (col != null)
+            {
+                float floorTop = col.bounds.max.y;
+                highestY = Mathf.Max(highestY, floorTop);
+            }
+        }
+
+        // Spawn 10 units above the top of the structure
+        float spawnHeight = highestY + 10f;
         Vector3 spawnPosition = new Vector3(baseTransform.position.x, spawnHeight, baseTransform.position.z);
-        Transform parent = floorHolder != null ? floorHolder : baseTransform;
 
-        GameObject floor = Instantiate(FloorPrefab, spawnPosition, Quaternion.identity, parent);
+        GameObject Floor = Instantiate(FloorPrefab, spawnPosition, Quaternion.identity, floorHolder);
 
-        Rigidbody rb = floor.GetComponent<Rigidbody>();
-        if (rb == null)
-            rb = floor.AddComponent<Rigidbody>();
-
+        // Rigidbody and collider check
+        Rigidbody rb = Floor.GetComponent<Rigidbody>();
+        if (rb == null) rb = Floor.AddComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.useGravity = true;
 
-        BoxCollider col = floor.GetComponent<BoxCollider>();
-        if (col == null)
-            col = floor.AddComponent<BoxCollider>();
+        if (Floor.GetComponent<Collider>() == null)
+            Floor.AddComponent<BoxCollider>();
 
-        // ✅ Let HighestObjectController respond to this
-        float landingHeight = floor.transform.position.y;  // Or floor.transform.position.y - halfHeight if needed
-        HighestObjectController hoc = FindObjectOfType<HighestObjectController>();
-        if (hoc != null)
-            hoc.Move(landingHeight);
-
-        score += 1;
+        score++;
         SetCountText();
     }
+
 
 
 

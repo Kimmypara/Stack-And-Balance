@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8234337507131633954}
   - component: {fileID: -1124375867537582945}
   - component: {fileID: 3505232911431715299}
+  - component: {fileID: -4691005249975223530}
   m_Layer: 0
   m_Name: FloorPrefab
   m_TagString: Floor
@@ -105,7 +106,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4766997058693663187}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ba9fcb1e05ef51848a2568d886050583, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -159,6 +160,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasLanded: 1
+--- !u!114 &-4691005249975223530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766997058693663187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8157a434dcf4da740a0b30b29b4bbb92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5023017606903959504
 GameObject:
   m_ObjectHideFlags: 0

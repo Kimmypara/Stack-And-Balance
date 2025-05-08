@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class HighestObjectController : MonoBehaviour
 {
+    public float verticalOffset = 0f;
+
     public void Move(float height)
     {
-        if (transform.position.y < height)
+        float targetY = height + verticalOffset;
+        if (transform.position.y < targetY)
         {
-            Vector3 newPos = new Vector3(transform.position.x, height, transform.position.z);
-            transform.position = newPos;
+            transform.position = new Vector3(transform.position.x, targetY, transform.position.z);
         }
     }
 }
