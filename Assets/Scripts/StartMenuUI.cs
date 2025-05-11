@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class StartMenuUI : MonoBehaviour
 {
     public GameObject howToPlayPanel;    
@@ -11,20 +11,33 @@ public class StartMenuUI : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("Start Game pressed");
-        
-        // Hide the main menu and how to play panels
-        mainMenuPanel.SetActive(false);
-        howToPlayPanel.SetActive(false);
-
-        // Show the gameplay elements
-        gameplayObjects.SetActive(true);
+        SceneManager.LoadScene("StackAndBalance");
     }
 
+    public void GoToStackAndBalance()
+    {
+        Debug.Log("Attempting to load StackAndBalance scene...");
+        SceneManager.LoadScene("StackAndBalance");
+    }
+
+    public void GoToHowToPlay()
+    {
+        Debug.Log("Attempting to load HowToPlay scene...");
+        SceneManager.LoadScene("HowToPlay");
+    }
+
+    public void GoToStartMenu()
+    {
+        Debug.Log("Attempting to load StartMenu scene...");
+        SceneManager.LoadScene("StartMenu");
+    }
+    
     public void ShowHowToPlay()
     {
         Debug.Log("Show How to Play");
         howToPlayPanel.SetActive(true);
         mainMenuPanel.SetActive(false); // Hide the main menu buttons
+        
     }
 
     public void HideHowToPlay()
