@@ -10,9 +10,9 @@ public class FloorLanded : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    void OnCollisionEnter(Collision collision)
     {
-        if (!hasLanded && rb != null && rb.linearVelocity.magnitude < 0.1f)
+        if (!hasLanded)
         {
             hasLanded = true;
             NotifyHeight();
@@ -24,7 +24,7 @@ public class FloorLanded : MonoBehaviour
         HighestObjectController heightTarget = FindObjectOfType<HighestObjectController>();
         if (heightTarget != null)
         {
-            float topY = GetComponent<Collider>().bounds.max.y;
+            float topY = GetComponent<Collider>().bounds.max.y + 2;
             heightTarget.Move(topY);
         }
     }
