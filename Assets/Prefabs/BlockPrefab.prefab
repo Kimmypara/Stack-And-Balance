@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasLanded: 0
   hitGroundSound: {fileID: 8300000, guid: a53742c478ee9f7428cf23b28beb1be8, type: 3}
+  landingEffectPrefab: {fileID: 4537653029621089860, guid: bd6103e0517bbab448356b50e720c0e8, type: 3}
 --- !u!114 &-724457317509179071
 MonoBehaviour:
   m_ObjectHideFlags: 0

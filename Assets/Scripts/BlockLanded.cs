@@ -13,6 +13,7 @@ public class BlockLanded : MonoBehaviour
     
     private float releaseTime;
     private bool soundPlayed = false;
+    public GameObject landingEffectPrefab; // ✅ Particle prefab
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -58,6 +59,12 @@ public class BlockLanded : MonoBehaviour
             if (hitGroundSound != null && audioSource != null)
             {
                 audioSource.PlayOneShot(hitGroundSound);
+                // ✅ Trigger particle effect at collision point
+                ContactPoint contact = collision.contacts[0];
+                Vector3 spawnPosition = contact.point;
+
+                if (landingEffectPrefab != null)
+                    Instantiate(landingEffectPrefab, spawnPosition, Quaternion.identity);
             }
 
             HighestObjectController height = FindObjectOfType<HighestObjectController>();
