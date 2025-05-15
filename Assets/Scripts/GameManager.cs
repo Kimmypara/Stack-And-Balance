@@ -149,6 +149,9 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Dragging released — dropping block");
             isDragging = false;
+    
+            currentBlock.GetComponent<BlockLanded>()?.SetReleased();
+
             currentRigidbody.isKinematic = false;
 
             currentBlock = null;
@@ -161,9 +164,9 @@ public class GameManager : MonoBehaviour
             else
             {
                 StartCoroutine(SpawnAfterTime());
-
             }
         }
+
     }
     
     public void TriggerGameOver()
