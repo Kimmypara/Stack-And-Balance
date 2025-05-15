@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3505232911431715299}
   - component: {fileID: -4691005249975223530}
   - component: {fileID: -3666661070455922068}
+  - component: {fileID: -3315904524277758686}
   m_Layer: 0
   m_Name: FloorPrefab
   m_TagString: Floor
@@ -161,7 +162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasLanded: 1
-  hitGroundSound: {fileID: 0}
+  hitGroundSound: {fileID: 8300000, guid: a53742c478ee9f7428cf23b28beb1be8, type: 3}
+  landingEffectPrefab: {fileID: 4537653029621089860, guid: bd6103e0517bbab448356b50e720c0e8, type: 3}
 --- !u!114 &-4691005249975223530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +274,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-3315904524277758686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766997058693663187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c033ec330996a34090737edbe868c1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallThreshold: -5
 --- !u!1 &5023017606903959504
 GameObject:
   m_ObjectHideFlags: 0

@@ -34293,8 +34293,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 5547306258105893024, guid: 2cd435c48c2e69f4f9703760188fdb06, type: 3}
-  - {fileID: 8731933634424866053, guid: 651743993f1eff74f8279bf8ab7a9032, type: 3}
+  - {fileID: 5547306258105893024, guid: 651743993f1eff74f8279bf8ab7a9032, type: 3}
+  - {fileID: 8731933634424866053, guid: f41e42796faf66142afcfb619f788eab, type: 3}
   blockHolder: {fileID: 291397722}
   baseTransform: {fileID: 1322631739}
   cameraController: {fileID: 1377897028}

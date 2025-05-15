@@ -67,8 +67,9 @@ public class BlockLanded : MonoBehaviour
                     Instantiate(landingEffectPrefab, spawnPosition, Quaternion.identity);
             }
 
-            HighestObjectController height = FindObjectOfType<HighestObjectController>();
-            height?.Move(transform.position.y);
+            
+            HighestObjectController highestObjectController = FindObjectOfType<HighestObjectController>();
+            highestObjectController.Move(transform.position.y);
         }
     }
 
