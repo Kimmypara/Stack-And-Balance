@@ -60,11 +60,15 @@ public class BlockLanded : MonoBehaviour
             {
                 audioSource.PlayOneShot(hitGroundSound);
                 // ✅ Trigger particle effect at collision point
-                ContactPoint contact = collision.contacts[0];
-                Vector3 spawnPosition = contact.point;
+                for (var i = 0; i < collision.contacts.Length; i++)
+                {
+                    ContactPoint contact = collision.contacts[i];
+                    Vector3 spawnPosition = contact.point;
 
-                if (landingEffectPrefab != null)
-                    Instantiate(landingEffectPrefab, spawnPosition, Quaternion.identity);
+                    if (landingEffectPrefab != null)
+                        Instantiate(landingEffectPrefab, spawnPosition, Quaternion.identity);
+                    
+                }
             }
 
             
