@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CameraController cameraController;
     [SerializeField] private GameObject FloorPrefab;
     [SerializeField] private Transform floorHolder;
+    [SerializeField] private Transform doorPrefab; // Assign in Inspector
+    private bool hasSpawnedDoor = false;
+
     private int floorCount = 0;
     private bool isGameOver = false;
 
@@ -37,12 +40,21 @@ public class GameManager : MonoBehaviour
     
     void SpawnNewBlock()
     {
-        
-        
         Debug.Log("Spawning new block...");
-        Transform selectedPrefab = prefabs[Random.Range(0, prefabs.Length)];
-        currentBlock = (Transform)Instantiate(selectedPrefab, blockHolder.position, blockHolder.rotation, baseTransform);
 
+        Transform selectedPrefab;
+
+        if (!hasSpawnedDoor)
+        {
+            selectedPrefab = doorPrefab;
+            hasSpawnedDoor = true;
+        }
+        else
+        {
+            selectedPrefab = prefabs[Random.Range(0, prefabs.Length)];
+        }
+
+        currentBlock = Instantiate(selectedPrefab, blockHolder.position, blockHolder.rotation, baseTransform);
 
         if (TryGetComponent(out Renderer renderer))
         {
@@ -53,9 +65,8 @@ public class GameManager : MonoBehaviour
 
         currentRigidbody = currentBlock.GetComponent<Rigidbody>();
         currentRigidbody.isKinematic = true;
-        
-        
     }
+
     
     void SpawnFloor()
     {

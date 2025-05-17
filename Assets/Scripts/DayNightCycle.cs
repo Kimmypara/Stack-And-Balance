@@ -12,21 +12,24 @@ public class DayNightCycle : MonoBehaviour
     private GameObject[] streetLamps;
 
     [Header("Night Effects")]
-    public GameObject stars; // Assign a particle system or skybox object
+    public GameObject[] starSides; // Assign 4 star particle systems here
 
     void Start()
     {
         // Find all lamps tagged in the scene
         streetLamps = GameObject.FindGameObjectsWithTag(lampTag);
 
-        if (stars != null)
-            stars.SetActive(false); // Ensure stars start off
+        // Turn off all star sides initially
+        foreach (GameObject star in starSides)
+        {
+            if (star != null)
+                star.SetActive(false);
+        }
     }
 
     void Update()
     {
         float dot = Vector3.Dot(sun.transform.forward, Vector3.down);
-
         bool isNight = dot < nightThreshold;
 
         SetLamps(isNight);
@@ -45,7 +48,10 @@ public class DayNightCycle : MonoBehaviour
 
     void ToggleStars(bool show)
     {
-        if (stars != null)
-            stars.SetActive(show);
+        foreach (GameObject star in starSides)
+        {
+            if (star != null)
+                star.SetActive(show);
+        }
     }
 }
