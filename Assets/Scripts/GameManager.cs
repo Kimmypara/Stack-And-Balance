@@ -4,6 +4,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject thumbsUpPrefab;
     [SerializeField] private Transform[] prefabs;
     [SerializeField] private Transform blockHolder;
     [SerializeField] private Transform baseTransform; // Assign this in Inspector
@@ -150,6 +151,7 @@ public class GameManager : MonoBehaviour
             Plane dragPlane = new Plane(Camera.main.transform.forward, currentBlock.position);
             if (dragPlane.Raycast(ray, out float enter))
             {
+                Debug.Log($"Released block #{blockCount}, starting coroutine.");
                 Vector3 hitPoint = ray.GetPoint(enter);
                 hitPoint.y = currentBlock.position.y;
                 currentBlock.position = hitPoint;
