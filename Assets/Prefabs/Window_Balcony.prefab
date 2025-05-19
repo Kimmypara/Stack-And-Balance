@@ -285,6 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitGroundSound: {fileID: 8300000, guid: a53742c478ee9f7428cf23b28beb1be8, type: 3}
+  thumbsUpPrefab: {fileID: 0}
 --- !u!1001 &302078642406401863
 PrefabInstance:
   m_ObjectHideFlags: 0

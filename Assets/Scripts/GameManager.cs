@@ -4,7 +4,8 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject thumbsUpPrefab;
+    [SerializeField] public GameObject floorCompleteTextPrefab;
+    [SerializeField] public GameObject thumbsUpPrefab;
     [SerializeField] private Transform[] prefabs;
     [SerializeField] private Transform blockHolder;
     [SerializeField] private Transform baseTransform; // Assign this in Inspector
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform floorHolder;
     [SerializeField] private Transform doorPrefab; // Assign in Inspector
     private bool hasSpawnedDoor = false;
+
+    public static GameManager Instance { get; private set; }
 
     private int floorCount = 0;
     private bool isGameOver = false;
@@ -27,6 +30,11 @@ public class GameManager : MonoBehaviour
 
     private int blockCount = 0;
     private int rotationCount = 0;
+    
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
