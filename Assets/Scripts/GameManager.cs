@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
             currentBlock = null;
             currentRigidbody = null;
 
-            if (blockCount % 1 == 0)
+            if (blockCount % 5 == 0)
             {
                 StartCoroutine(WaitAndSpawn());
             }
