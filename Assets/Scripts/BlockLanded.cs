@@ -48,12 +48,14 @@ public class BlockLanded : MonoBehaviour
     
     private void OnCollisionEnter(Collision collision)
     {
+        
         if (!hasBeenReleased || hasLanded) return;
 
         if (collision.collider.CompareTag("Floor") || 
             collision.collider.CompareTag("Ground") || 
             collision.collider.CompareTag("Block"))
         {
+            NotifyHeight();
             hasLanded = true;
             Debug.Log("✅ Block landed on valid surface, playing sound.");
             if (hitGroundSound != null && audioSource != null)
@@ -71,7 +73,15 @@ public class BlockLanded : MonoBehaviour
                 }
             }
 
-            
+            void NotifyHeight()
+            {
+                HighestObjectController heightTarget = FindObjectOfType<HighestObjectController>();
+                if (heightTarget != null)
+                {
+                    float topY = GetComponent<Collider>().bounds.max.y + 2;
+                    heightTarget.Move(topY);
+                }
+            }
             HighestObjectController highestObjectController = FindObjectOfType<HighestObjectController>();
             highestObjectController.Move(transform.position.y);
         }

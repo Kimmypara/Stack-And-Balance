@@ -4,8 +4,6 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] public GameObject floorCompleteTextPrefab;
-    [SerializeField] public GameObject thumbsUpPrefab;
     [SerializeField] private Transform[] prefabs;
     [SerializeField] private Transform blockHolder;
     [SerializeField] private Transform baseTransform; // Assign this in Inspector

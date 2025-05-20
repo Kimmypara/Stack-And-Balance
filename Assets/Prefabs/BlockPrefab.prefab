@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 1592478278241268456}
   - component: {fileID: -724457317509179071}
   - component: {fileID: -163272171403057842}
-  - component: {fileID: -1597626317728696155}
   m_Layer: 0
   m_Name: BlockPrefab
   m_TagString: Block
@@ -265,16 +264,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-1597626317728696155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8754504235671453492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8157a434dcf4da740a0b30b29b4bbb92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitGroundSound: {fileID: 8300000, guid: a53742c478ee9f7428cf23b28beb1be8, type: 3}

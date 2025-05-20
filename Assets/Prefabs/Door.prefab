@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 3109232933318140148}
   - component: {fileID: -8686297478167593638}
   - component: {fileID: 8486966837848966680}
-  - component: {fileID: 2565183881663826914}
   m_Layer: 0
   m_Name: Door
   m_TagString: Block
@@ -116,8 +115,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.0092404, y: 1.0054337, z: 1}
+  m_Center: {x: -0.0010886808, y: -0.0027168838, z: 0}
 --- !u!54 &2225015572622286267
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -195,7 +194,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 8013.6797
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -270,19 +269,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2565183881663826914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8694797420076927543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8157a434dcf4da740a0b30b29b4bbb92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitGroundSound: {fileID: 8300000, guid: a53742c478ee9f7428cf23b28beb1be8, type: 3}
 --- !u!1001 &2528528313815589347
 PrefabInstance:
   m_ObjectHideFlags: 0
